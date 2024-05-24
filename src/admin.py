@@ -4,25 +4,18 @@ i18n.set_language(language='en_US')
 from fastapi_amis_admin.admin.settings import Settings
 from fastapi_amis_admin.admin.site import AdminSite
 from fastapi_amis_admin.admin import admin
-from fastapi_amis_admin.amis.components import PageSchema
 from .models import User
+from .utils import add_documentation_panel
 
-# Create AdminSite instance
-SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
-site = AdminSite(settings=Settings(database_url=SQLALCHEMY_DATABASE_URI))
+site = AdminSite(settings=Settings(database_url=os.getenv("DATABASE_URL")))
+# We add the documentation to help students use the admin panel
+site = add_documentation_panel(site)
 
+""" 🔥 ⬇️ Add all your models below this line ⬇️ 🔥 """
 
-# Registration management class
+# Adding this UserAdmin class will allow you to manage the User model from the admin panel
 @site.register_admin
-class GitHubIframeAdmin(admin.IframeAdmin):
-    # Set page menu information
-    page_schema = PageSchema(label='Documentation', icon='fa fa-github')
-    # Set the jump link
-    src = 'https://4geeksacademy.com'
-
-# register ModelAdmin
-@site.register_admin
-class CategoryAdmin(admin.ModelAdmin):
+class UserAdmin(admin.ModelAdmin):
     page_schema = 'User'
     # set model
     model = User

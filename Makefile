@@ -41,8 +41,8 @@ init:
 	@echo "Database and migrations initialized successfully."
 
 # Remove an restart de database
-.PHONY: restart_db
-restart_db:
+.PHONY: reset_db
+reset_db:
 	@echo "Restarting database and initializing migrations..."
 	@if [ -d "migrations" ]; then \
 		rm -rf migrations; \

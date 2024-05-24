@@ -1,7 +1,11 @@
+import os, importlib
 from fastapi import FastAPI, Request
 from starlette.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.routing import APIRoute
+from fastapi_amis_admin.admin import admin
+from fastapi_amis_admin.amis.components import PageSchema
+from pydantic import ValidationError
 
 class APIException(Exception):
     status_code = 400
@@ -43,7 +47,7 @@ def generate_sitemap(app: FastAPI):
         </div>
     """
 
-def bootstrap_app(app):
+def apply_basic_configuration(app):
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],
@@ -65,8 +69,39 @@ def bootstrap_app(app):
             content=exc.to_dict(),
         )
     
+    @app.exception_handler(ValidationError)
+    def validation_exception_handler(request: Request, exc: ValidationError):
+        print("Asdasdasd")
+        errors = exc.errors()
+        simplified_errors = [error['msg'] for error in errors]
+        return JSONResponse(
+            status_code=401,
+            content={"message": simplified_errors}
+        )
+    
     @app.get("/")
     def read_root(request: Request):
         return HTMLResponse(generate_sitemap(app))
+    
+    # Create AdminSite instance
+    return app
+
+def add_documentation_panel(site):
+
+    @site.register_admin
+    class GitHubIframeAdmin(admin.IframeAdmin):
+        page_schema = PageSchema(label='Documentation', icon='fa fa-github')
+        src = 'https://4geeks.com/docs/start/react-flask-template'
+
+    return site
+
+
+def include_routers(app: FastAPI):
+    routers_path = os.path.join(os.path.dirname(__file__), 'endpoints')
+    for file in os.listdir(routers_path):
+        if file.endswith('.py') and file != '__init__.py':
+            module_name = file.replace('.py', '')
+            module = importlib.import_module("src.endpoints."+module_name)
+            app.include_router(module.router)
 
     return app

@@ -49,37 +49,15 @@ def run_migrations_offline():
 
 
 def run_migrations_online():
-    """Run migrations in 'online' mode.
-    
-    In this scenario we need to create an Engine
-    and associate a connection with the context.
-    """
-
-    # Read the SQLAlchemy URL from the Alembic config
-    configuration = config.get_section(config.config_ini_section)
-    configuration['sqlalchemy.url'] = config.get_main_option("sqlalchemy.url")
     connectable = engine_from_config(
-        configuration,
-        prefix='sqlalchemy.',
-        poolclass=pool.NullPool,
-    )
+        config.get_section(config.config_ini_section),
+        prefix="sqlalchemy.",
+        poolclass=pool.NullPool)
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection,
-            target_metadata=target_metadata,
-            compare_type=True,  # Enable comparison of column types
-            compare_server_default=True  # Enable comparison of server defaults
-        )
-
-        # Create a migration context to produce migrations
-        migration_context = MigrationContext.configure(connection)
-        diff = produce_migrations(migration_context, target_metadata)
-        if not diff.upgrade_ops.is_empty():
+        context.configure(connection=connection, target_metadata=target_metadata)
+        with context.begin_transaction():
             context.run_migrations()
-        else:
-            print("No changes in schema detected.")
-
 
 if context.is_offline_mode():
     run_migrations_offline()
