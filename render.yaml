@@ -5,7 +5,6 @@ services:
   - type: web # valid values: https://render.com/docs/yaml-spec#type
     region: ohio
     name: fast-api-hello
-#    dockerfilePath: ./.devcontainer/Dockerfile.render
     env: python # valid values: https://render.com/docs/yaml-spec#environment
     buildCommand: "make install && make upgrade"
     startCommand: "make start"
