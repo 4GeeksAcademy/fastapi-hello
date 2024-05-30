@@ -1,4 +1,4 @@
-<a href="https://www.breatheco.de"><img height="280" align="right" src="https://github.com/4GeeksAcademy/flask-rest-hello/blob/main/docs/assets/badge.png?raw=true"></a>
+<a href="https://www.breatheco.de"><img height="280" align="right" src="https://github.com/4GeeksAcademy/fastapi-hello/blob/main/.devcontainer/badge-fastapi.png?raw=true"></a>
 
 # The Smalles possible FastAPI Template
 
