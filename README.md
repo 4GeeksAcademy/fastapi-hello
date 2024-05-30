@@ -4,7 +4,7 @@
 
 Create an API's using FastAPI in just minutes, [📹 watch the video tutorial](https://youtu.be/ORxQ-K3BzQA).
 
-- [Extensive documentation here](https://start.4geeksacademy.com).
+- [Extensive documentation here](https://4geeks.com/docs/start/start-fastapi).
 - Integrated with Pipenv for package managing.
 - Fast deloyment to render.com or heroku with `$ pipenv run deploy`.
 - Use of `.env` file.
