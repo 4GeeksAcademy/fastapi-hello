@@ -4,7 +4,7 @@
 services:
   - type: web # valid values: https://render.com/docs/yaml-spec#type
     region: ohio
-    name: flask-rest-hello
+    name: fast-api-hello
     env: python # valid values: https://render.com/docs/yaml-spec#environment
     buildCommand: "make install && make upgrade"
     startCommand: "make start"
@@ -13,19 +13,17 @@ services:
     envVars:
       - key: BASENAME
         value: /
-      - key: FLASK_APP
-        value: src/app.py
       - key: DEBUG
         value: TRUE
       - key: PYTHON_VERSION
         value: 3.10.6
       - key: DATABASE_URL # Render PostgreSQL database
         fromDatabase:
-          name: flask-rest-42170
+          name: fast-api-42170
           property: connectionString
 
 databases: # Render PostgreSQL database
-  - name: flask-rest-42170
+  - name: fast-api-42170
     region: ohio
     ipAllowList: [] # only allow internal connections
     plan: free # optional; defaults to starter
