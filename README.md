@@ -48,7 +48,7 @@ There is an example API working with an example database. All your application c
 - src/admin.py: add your models to the admin and manage your data easily.
 - src/database.py: Do not modify this file, database configuration.
 
-For a more detailed explanation, look for [extensive documentation here](https://4geeks.com/docs/start/python-api-fastapi-template).
+For a more detailed explanation, look for [extensive documentation here](https://4geeks.com/docs/start/start-fastapi).
 
 ## Remember to migrate every time you update your models
 
@@ -56,7 +56,7 @@ You have to migrate and upgrade the migrations for every update you make to your
 
 ```bash
 $ pipenv run migrate # (to make the migrations)
-$ pipenv run upgrade  # (to update your databse with the migrations)
+$ pipenv run upgrade  # (to update your database with the migrations)
 ```
 
 ## Check your API live
