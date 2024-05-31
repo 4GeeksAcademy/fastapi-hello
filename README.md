@@ -17,7 +17,11 @@ Skip this installation steps and jump to step 2 if you decide to use any of thos
 
 > Important: The boiplerplate is made for python 3.10 but you can change the `python_version` on the Pipfile.
 
-The following steps are automatically runned withing Codespaces or Gitpod, if you are doing a local installation you have to do them manually:
+The following steps are automatically runned withing Codespaces or Gitpod.
+
+### Only for localhost installations:
+
+If you are doing a local installation, you have to do the following manually:
 
 ```sh
 # Install packages
