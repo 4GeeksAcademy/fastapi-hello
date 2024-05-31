@@ -42,10 +42,11 @@ pipenv run upgrade;
 
 There is an example API working with an example database. All your application code should be written inside the `./src/` folder.
 
-- src/main.py (it's where your endpoints should be coded)
-- src/models.py (your database tables and serialization logic)
-- src/utils.py (some reusable classes and functions)
-- src/admin.py (add your models to the admin and manage your data easily)
+- src/endpoints/<file>.py: it's where your endpoints should be coded; add one file for each model, for example, `./src/endpoints/user.py.`
+- src/models.py: your database tables and serialization logic.
+- src/utils.py: some reusable classes and functions.
+- src/admin.py: add your models to the admin and manage your data easily.
+- src/database.py: Do not modify this file, database configuration.
 
 For a more detailed explanation, look for [extensive documentation here](https://4geeks.com/docs/start/python-api-fastapi-template).
 
