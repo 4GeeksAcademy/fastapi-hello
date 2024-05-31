@@ -12,7 +12,7 @@ Create an API's using FastAPI in just minutes, [📹 watch the video tutorial](h
 
 ## 1) Installation
 
-This template installs itself in a few seconds if you open it for free with Codespaces (recommended) or Gitpod.
+If you [open this template using 4Geeks' Click and Code  bridge](https://s.4geeks.com/start) it will install itself in a few seconds if you open it for free with Codespaces (recommended) or Gitpod.
 Skip this installation steps and jump to step 2 if you decide to use any of those services.
 
 > Important: The boiplerplate is made for python 3.10 but you can change the `python_version` on the Pipfile.
@@ -74,6 +74,6 @@ This boilerplate it's 100% read to deploy with Render.com and Herkou in a matter
 
 ### Contributors
 
-This template was built as part of the 4Geeks Academy [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about our [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), and [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
+This template was built as part of the 4Geeks Academy [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about our [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning) and [CyberSecurity Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/cybersecurity).
 
-You can find other templates and resources like this at the [school github page](https://github.com/4geeksacademy/).
+You can find other templates and resources like this at the [school's Github page](https://github.com/4geeksacademy/).
