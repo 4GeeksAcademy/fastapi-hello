@@ -12,7 +12,7 @@ Create an API's using FastAPI in just minutes, [📹 watch the video tutorial](h
 
 ## 1) Installation
 
-If you [open this template using 4Geeks' Click and Code  bridge](https://s.4geeks.com/start) it will install itself in a few seconds if you open it for free with Codespaces (recommended) or Gitpod.
+If you [open this template using 4Geeks' Click and Code  bridge](https://s.4geeks.com/start?repo=4GeeksAcademy/fastapi-hello) it will install itself in a few seconds if you open it for free with Codespaces (recommended) or Gitpod.
 Skip this installation steps and jump to step 2 if you decide to use any of those services.
 
 > Important: The boiplerplate is made for python 3.10 but you can change the `python_version` on the Pipfile.
