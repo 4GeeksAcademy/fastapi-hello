@@ -1,0 +1,74 @@
+---
+globs: src/admin.py
+alwaysApply: false
+---
+# Cursor Context Rule for src/admin.py
+
+## Purpose
+This rule applies to all code in `src/admin.py` and governs how to add or update admin panel support for models defined in `src/models.py`.
+
+## Rule
+- **Model Registration:**
+  - For every model defined in `src/models.py`, create a corresponding `ModelAdmin` class in `src/admin.py`.
+  - Register each `ModelAdmin` class with the `site` instance using the `@site.register_admin` decorator.
+  - Set the `model` attribute of each `ModelAdmin` class to the corresponding model class from `src/models.py`.
+  - Set the `page_schema` attribute to a string matching the model name (e.g., `'User'` for the `User` model).
+
+- **Imports:**
+  - Import all models to be registered from `src/models.py` at the top of `src/admin.py`.
+
+- **Documentation Panel:**
+  - Ensure the documentation panel is added to the `site` using `add_documentation_panel(site)` as shown in the current file.
+
+- **Example:**
+  ```python
+  from .models import User
+  
+  @site.register_admin
+  class UserAdmin(admin.ModelAdmin):
+      page_schema = 'User'
+      model = User
+  ```
+
+- **Extensibility:**
+  - When new models are added to `src/models.py`, repeat the above steps to add them to the admin panel.
+
+- **Do Not:**
+  - Do not remove or modify the documentation panel logic.
+  - Do not register models that are not defined in `src/models.py`.
+
+# Cursor Context Rule for src/admin.py
+
+## Purpose
+This rule applies to all code in `src/admin.py` and governs how to add or update admin panel support for models defined in `src/models.py`.
+
+## Rule
+- **Model Registration:**
+  - For every model defined in `src/models.py`, create a corresponding `ModelAdmin` class in `src/admin.py`.
+  - Register each `ModelAdmin` class with the `site` instance using the `@site.register_admin` decorator.
+  - Set the `model` attribute of each `ModelAdmin` class to the corresponding model class from `src/models.py`.
+  - Set the `page_schema` attribute to a string matching the model name (e.g., `'User'` for the `User` model).
+
+- **Imports:**
+  - Import all models to be registered from `src/models.py` at the top of `src/admin.py`.
+
+- **Documentation Panel:**
+  - Ensure the documentation panel is added to the `site` using `add_documentation_panel(site)` as shown in the current file.
+
+- **Example:**
+  ```python
+  from .models import User
+  
+  @site.register_admin
+  class UserAdmin(admin.ModelAdmin):
+      page_schema = 'User'
+      model = User
+  ```
+
+- **Extensibility:**
+  - When new models are added to `src/models.py`, repeat the above steps to add them to the admin panel.
+
+- **Do Not:**
+  - Do not remove or modify the documentation panel logic.
+  - Do not register models that are not defined in `src/models.py`.
+

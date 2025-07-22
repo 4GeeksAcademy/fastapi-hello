@@ -1,0 +1,43 @@
+---
+globs: src/models.py
+alwaysApply: false
+---
+
+# Context Rule for src/models.py
+
+## Scope
+This rule applies to all code under `src/models.py`.
+
+## SQLAlchemy Model Guidelines
+
+### Adding a New Model
+1. Inherit from `Base` imported from `.database`.
+2. Set `__tablename__` to the desired table name (as a string).
+3. Define columns using `Column`, specifying type (e.g., `Integer`, `String`, `Boolean`), constraints (e.g., `primary_key=True`, `unique=True`, `nullable=False`), and length where appropriate.
+4. For passwords or sensitive data, use a field like `hashed_password` and ensure it is hashed before saving (do not store plain text passwords).
+5. Add a `__repr__` method for debugging, using a unique or identifying field (e.g., email or username).
+
+### Updating an Existing Model
+1. To add a new column, define it as a new class attribute using `Column` with the appropriate type and constraints.
+2. To remove or rename a column, update the class definition and ensure corresponding database migrations are created/applied.
+3. When changing constraints (e.g., making a field unique or nullable), update the `Column` definition and handle migrations accordingly.
+4. Always keep the model class in sync with the database schema and migrations.
+
+### General Practices
+- Do not store plain text passwords; always use a hashed field (e.g., `hashed_password`).
+- Use descriptive and consistent naming for columns and models.
+- Document any non-obvious logic or constraints in comments.
+- Ensure all models inherit from the shared `Base` for SQLAlchemy ORM integration.
+
+### Example
+```python
+class User(Base):
+    __tablename__ = 'user'
+    id = Column(Integer, primary_key=True)
+    email = Column(String(120), unique=True, nullable=False)
+    hashed_password = Column(String(80), nullable=False)
+    is_active = Column(Boolean(), nullable=False)
+
+    def __repr__(self):
+        return f'<User {self.email}>'
+```

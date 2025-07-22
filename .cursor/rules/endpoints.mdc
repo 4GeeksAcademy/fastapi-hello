@@ -1,0 +1,167 @@
+---
+globs: src/endpoints/*.py
+alwaysApply: false
+---
+# REST API Endpoint Coding Rules for `src/endpoints/*.py`
+
+## General Principles
+- Use FastAPI's `APIRouter` for all endpoint definitions.
+- Import dependencies at the top: `APIRouter`, `Request`, `Depends`, and any required models, serializers, or utilities.
+- Use SQLAlchemy's `Session` for database access, injected via `Depends(get_db)`.
+- Use Pydantic models (serializers) for request validation and response formatting.
+- Use a custom `APIException` for error handling.
+
+## Endpoint Structure
+- **GET (list):**
+  - Route: `/model` (e.g., `/user`)
+  - Returns a list of model instances, formatted using a Pydantic serializer.
+  - Response should include a `msg` and a `data` property (with the serialized list).
+- **GET (single):**
+  - Route: `/model/{id}` (e.g., `/user/{user_id}`)
+  - Returns a single model instance by primary key.
+  - If not found, raise `APIException` with 404.
+  - Use a `.serialize()` method or a serializer for output.
+- **POST (create):**
+  - Route: `/model`
+  - Accepts a Pydantic serializer as the request body.
+  - Checks for duplicates (e.g., by email) before creating.
+  - Hash sensitive data (e.g., passwords) before saving.
+  - Returns the created object or input payload.
+
+## Serializers
+- Define Pydantic models for both input (request) and output (response) data.
+- Use `Field` for validation (e.g., min/max length).
+- Use `EmailStr` for email fields.
+- For output serializers, set `from_attributes = True` in `Config`.
+
+## Error Handling
+- Use `APIException` for all error responses, with appropriate status codes and messages.
+
+## Example Template
+```python
+from fastapi import APIRouter, Request, Depends
+from sqlalchemy.orm import Session
+from ..database import get_db
+from ..utils import APIException
+from ..models import Base, ModelName
+from pydantic import BaseModel, Field
+
+router = APIRouter()
+
+class CreateModelSerializer(BaseModel):
+    # Define input fields
+    ...
+
+class ModelSmallSerializer(BaseModel):
+    # Define output fields
+    ...
+    class Config:
+        from_attributes = True
+
+@router.get('/model')
+def get_all_models(db: Session = Depends(get_db)):
+    models = db.query(ModelName).all()
+    return {
+        "msg": "GET /model response",
+        "data": [ModelSmallSerializer.model_validate(m) for m in models]
+    }
+
+@router.get('/model/{model_id}')
+def get_single_model(model_id: int, db: Session = Depends(get_db)):
+    model = db.query(ModelName).filter(ModelName.id == model_id).first()
+    if model is None:
+        raise APIException("Model not found", status_code=404)
+    return model.serialize()
+
+@router.post('/model')
+def create_model(payload: CreateModelSerializer, db: Session = Depends(get_db)):
+    # Check for duplicates, hash sensitive data, create and commit
+    ...
+    return payload
+```
+
+## Additional Notes
+- Keep endpoint logic concise; use utility functions for complex operations.
+- Always validate and sanitize input data.
+- Follow this structure for all new endpoints under `src/endpoints/*.py`. # REST API Endpoint Coding Rules for `src/endpoints/*.py`
+
+## General Principles
+- Use FastAPI's `APIRouter` for all endpoint definitions.
+- Import dependencies at the top: `APIRouter`, `Request`, `Depends`, and any required models, serializers, or utilities.
+- Use SQLAlchemy's `Session` for database access, injected via `Depends(get_db)`.
+- Use Pydantic models (serializers) for request validation and response formatting.
+- Use a custom `APIException` for error handling.
+
+## Endpoint Structure
+- **GET (list):**
+  - Route: `/model` (e.g., `/user`)
+  - Returns a list of model instances, formatted using a Pydantic serializer.
+  - Response should include a `msg` and a `data` property (with the serialized list).
+- **GET (single):**
+  - Route: `/model/{id}` (e.g., `/user/{user_id}`)
+  - Returns a single model instance by primary key.
+  - If not found, raise `APIException` with 404.
+  - Use a `.serialize()` method or a serializer for output.
+- **POST (create):**
+  - Route: `/model`
+  - Accepts a Pydantic serializer as the request body.
+  - Checks for duplicates (e.g., by email) before creating.
+  - Hash sensitive data (e.g., passwords) before saving.
+  - Returns the created object or input payload.
+
+## Serializers
+- Define Pydantic models for both input (request) and output (response) data.
+- Use `Field` for validation (e.g., min/max length).
+- Use `EmailStr` for email fields.
+- For output serializers, set `from_attributes = True` in `Config`.
+
+## Error Handling
+- Use `APIException` for all error responses, with appropriate status codes and messages.
+
+## Example Template
+```python
+from fastapi import APIRouter, Request, Depends
+from sqlalchemy.orm import Session
+from ..database import get_db
+from ..utils import APIException
+from ..models import Base, ModelName
+from pydantic import BaseModel, Field
+
+router = APIRouter()
+
+class CreateModelSerializer(BaseModel):
+    # Define input fields
+    ...
+
+class ModelSmallSerializer(BaseModel):
+    # Define output fields
+    ...
+    class Config:
+        from_attributes = True
+
+@router.get('/model')
+def get_all_models(db: Session = Depends(get_db)):
+    models = db.query(ModelName).all()
+    return {
+        "msg": "GET /model response",
+        "data": [ModelSmallSerializer.model_validate(m) for m in models]
+    }
+
+@router.get('/model/{model_id}')
+def get_single_model(model_id: int, db: Session = Depends(get_db)):
+    model = db.query(ModelName).filter(ModelName.id == model_id).first()
+    if model is None:
+        raise APIException("Model not found", status_code=404)
+    return model.serialize()
+
+@router.post('/model')
+def create_model(payload: CreateModelSerializer, db: Session = Depends(get_db)):
+    # Check for duplicates, hash sensitive data, create and commit
+    ...
+    return payload
+```
+
+## Additional Notes
+- Keep endpoint logic concise; use utility functions for complex operations.
+- Always validate and sanitize input data.
+- Follow this structure for all new endpoints under `src/endpoints/*.py`. 

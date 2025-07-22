@@ -1,0 +1,82 @@
+---
+alwaysApply: true
+---
+
+## General Rule: FastAPI Project Structure and Usage
+
+This rule is always applied and defines the conventions for using this FastAPI template, including where to add endpoints, utility functions, models, and admin logic. It also provides essential information for large language models (LLMs) and coding IDEs on how to run the project and manage the database.
+
+---
+
+### 1. Endpoints (`src/endpoints/*.py`)
+- **Location:** Add all REST API endpoints as separate files in `src/endpoints/`, one per resource/model (e.g., `user.py`). You can learn mode about the endpoits at `.cursor/rules/endpoints.mdc`
+
+### 2. Models (`src/models.py`)
+- **Location:** Define all SQLAlchemy ORM models in `src/models.py`. You can learn more about models at `.cursor/rules/models.mdc`
+- **Updating Models:**
+  - Keep model class in sync with DB schema and migrations.
+
+### 3. Utilities (`src/utils.py`)
+- **Location:** Add general-purpose utility functions, reusable classes, exception types, and shared helpers in `src/utils.py`. You can learn more about utilities at `.cursor/rules/utils.mdc`
+- **Guidelines:**
+  - Design utilities to be stateless and reusable.
+  - Define and use custom exceptions (e.g., `APIException`).
+  - Place configuration helpers or setup functions here if used by the main app or other modules.
+  - Document all utilities with docstrings.
+
+### 4. Admin Panel (`src/admin.py`)
+- **Location:** Register all models for admin management in `src/admin.py`. You can learn more about the admin at `.cursor/rules/admin.mdc`
+- **Conventions:**
+  - For every model in `src/models.py`, create a corresponding `ModelAdmin` class in `src/admin.py`.
+  - Register each with the `site` instance using `@site.register_admin`.
+  - Set the `model` attribute to the model class and `page_schema` to the model name.
+  - Import all models to be registered at the top of `src/admin.py`.
+  - Ensure the documentation panel is added to the `site` using `add_documentation_panel(site)`.
+
+---
+
+## Project Setup, Running, and Database Management
+
+### Installation
+- Install dependencies:
+  ```sh
+  pipenv install
+  ```
+- Create the Postgres database (example):
+  ```sh
+  psql -U root -c 'CREATE DATABASE example;'
+  ```
+
+### Migrations
+- Initialize migrations:
+  ```sh
+  pipenv run init
+  ```
+- Create a new migration after updating models:
+  ```sh
+  pipenv run migrate
+  ```
+- Apply migrations to update the database:
+  ```sh
+  pipenv run upgrade
+  ```
+- **Note:** Always run `migrate` and `upgrade` after changing models.
+
+### Running the API
+- Start the development server:
+  ```sh
+  pipenv run start
+  ```
+- The API will be live; open it via the "ports" tab or browser as appropriate.
+
+### Deployment
+- Ready for deployment to Render.com or Heroku. See official docs for details.
+
+---
+
+## Additional Notes for LLMs and IDEs
+- All application code should be written inside the `src/` folder.
+- Endpoints go in `src/endpoints/`, models in `src/models.py`, utilities in `src/utils.py`, and admin logic in `src/admin.py`.
+- Always use migrations to keep the database schema in sync with models.
+- Use the provided commands for setup, migration, and running the server.
+- For more details, see the [README.md](../README.md) and [4Geeks documentation](https://4geeks.com/docs/start/start-fastapi).

@@ -1,0 +1,58 @@
+---
+globs: src/utils.py
+alwaysApply: false
+---
+# Context Rule for src/utils.py
+
+## Scope
+This rule applies to all code under `src/utils.py`.
+
+## Purpose
+- `src/utils.py` is the central location for utility functions, reusable classes, exception definitions, and shared helpers that are used across multiple modules in the project.
+
+## Guidelines for Adding Utility Code
+1. **Function/Class Placement:**
+   - Add general-purpose functions, classes, or exception types that are not specific to a single feature or endpoint.
+   - Do not add business logic or endpoint-specific code here.
+2. **Imports:**
+   - Import only what is necessary for the utility's operation.
+   - Avoid circular imports by not importing from modules that depend on `utils.py`.
+3. **Reusability:**
+   - Design functions and classes to be stateless and reusable wherever possible.
+   - Use clear, descriptive names and docstrings for all utilities.
+4. **Error Handling:**
+   - Define and use custom exceptions (e.g., `APIException`) for consistent error handling across the codebase.
+5. **Configuration:**
+   - Place configuration helpers or setup functions (e.g., CORS, error handlers) here if they are used by the main app or other modules.
+6. **Documentation:**
+   - Document the purpose and usage of each utility function or class with docstrings.
+   - Update this context rule if new patterns or conventions are introduced.
+
+## Guidelines for Updating Utility Code
+1. **Backward Compatibility:**
+   - When updating existing utilities, ensure changes do not break existing imports or usages unless a refactor is planned.
+2. **Refactoring:**
+   - If a utility grows too large or complex, consider splitting it into a separate module under a `utils/` subdirectory.
+3. **Testing:**
+   - Test utility functions independently before integrating them into other modules.
+4. **Deprecation:**
+   - Mark deprecated utilities clearly in comments and provide alternatives if available.
+
+## Example Utility Addition
+```python
+# Good: General-purpose exception
+class APIException(Exception):
+    ...
+
+# Good: Shared configuration function
+def apply_basic_configuration(app):
+    ...
+```
+
+## Anti-Patterns
+- Do not add endpoint-specific logic or database models here.
+- Do not import from modules that depend on `utils.py` to avoid circular dependencies.
+description:
+globs:
+alwaysApply: false
+---
